@@ -17,19 +17,29 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "avatar_id")
     private Avatar avatar;
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Image backgroundImage;
+
     private String nameSurname;
+
     @Column(unique = true)
     private String username;
+
     private String password;
+
     private String email;
+
     private String bioContent;
+
     private boolean isActive;
+
     private LocalDate birthdayDate;
+
     private LocalDateTime createdTime;
 
     @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL, orphanRemoval = true)

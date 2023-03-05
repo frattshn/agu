@@ -3,16 +3,17 @@ package com.beykent.aguapi.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Data
+import java.util.Set;
+
 @Entity
-public class Follower {
+@Data
+public class Tag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
+    @ManyToMany(mappedBy = "tags")
+    private Set<Post> posts;
 }
