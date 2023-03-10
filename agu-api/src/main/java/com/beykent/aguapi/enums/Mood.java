@@ -9,6 +9,4 @@ public enum Mood {
     INSPIRED,
     CALM,
     CONFUSED
-
-
 }
