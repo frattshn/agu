@@ -5,17 +5,19 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "report")
 @Data
 public class Report {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "report_id")
     private Long id;
 
     // bunu ekledim diyagramda yok
     private String reason;
 
+    @ManyToOne
     @JoinColumn(name = "reported_user_id")
     private User reportedUser;
 

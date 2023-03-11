@@ -2,13 +2,14 @@ package com.beykent.aguapi.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
+@Entity(name = "avatar")
 @Data
-@Entity
 public class Avatar {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "avatar_id")
+    private Long id;
 
     private String avatarUrl;
 

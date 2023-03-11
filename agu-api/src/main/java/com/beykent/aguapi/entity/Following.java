@@ -9,6 +9,7 @@ public class Following {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "following_id")
     private Long id;
 
     @ManyToOne

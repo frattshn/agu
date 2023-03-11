@@ -10,12 +10,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
+@Entity(name = "user")
 @Data
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", columnDefinition = "BIGINT(20)")
     private Long id;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -23,45 +24,53 @@ public class User {
     private Avatar avatar;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "background_image_id")
     private Image backgroundImage;
 
+    @Column(name = "name_surname", columnDefinition = "VARCHAR(255)")
     private String nameSurname;
 
-    @Column(unique = true)
+    @Column(name = "user_name", unique = true, columnDefinition = "VARCHAR(255)")
     private String username;
 
+    @Column(name = "password", columnDefinition = "VARCHAR(255)")
     private String password;
 
+    @Column(name = "email", unique = true, columnDefinition = "VARCHAR(255)")
     private String email;
 
+    @Column(name = "bio_content", columnDefinition = "TEXT")
     private String bioContent;
 
+    @Column(name = "is_active")
     private boolean isActive;
 
+    @Column(name = "birthday_date", columnDefinition = "DATE")
     private LocalDate birthdayDate;
 
+    @Column(name = "created_time", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdTime;
 
-    @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "user_id")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @Fetch(FetchMode.JOIN)
     private List<Follower> followers;
 
-    @OneToMany(mappedBy = "following", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "user_id")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @Fetch(FetchMode.JOIN)
     private List<Following> followings;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Fetch(FetchMode.JOIN)
     private List<Comment> comments;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Fetch(FetchMode.JOIN)
     private List<Like> likes;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "senderUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> messages;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
