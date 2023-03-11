@@ -5,12 +5,13 @@ import lombok.Data;
 
 import java.util.Set;
 
-@Entity
+@Entity(name = "tag")
 @Data
 public class Tag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "tag_id")
     private Long id;
     private String name;
 
