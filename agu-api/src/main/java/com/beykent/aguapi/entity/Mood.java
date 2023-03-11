@@ -1,4 +1,4 @@
-package com.beykent.aguapi.enums;
+package com.beykent.aguapi.entity;
 
 public enum Mood {
     HAPPY,
