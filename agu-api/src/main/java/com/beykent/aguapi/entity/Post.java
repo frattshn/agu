@@ -1,6 +1,5 @@
 package com.beykent.aguapi.entity;
 
-import com.beykent.aguapi.enums.Mood;
 import jakarta.persistence.*;
 import lombok.Data;
 
