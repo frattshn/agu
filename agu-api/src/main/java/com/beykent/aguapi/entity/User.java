@@ -1,18 +1,31 @@
 package com.beykent.aguapi.entity;
 
-import jakarta.persistence.*;
-import lombok.Data;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
-import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+
 @Entity(name = "user")
 @Data
 public class User {
+	
+	public static final Integer USER_ACTIVE 	= Integer.valueOf(1);
+	public static final Integer USER_INACTIVE 	= Integer.valueOf(0);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,12 +43,14 @@ public class User {
     @Column(name = "name_surname", columnDefinition = "VARCHAR(255)")
     private String nameSurname;
 
+    @Size(min = 3)
     @Column(name = "user_name", unique = true, columnDefinition = "VARCHAR(255)")
     private String username;
 
     @Column(name = "password", columnDefinition = "VARCHAR(255)")
     private String password;
 
+    @Email
     @Column(name = "email", unique = true, columnDefinition = "VARCHAR(255)")
     private String email;
 
@@ -43,7 +58,7 @@ public class User {
     private String bioContent;
 
     @Column(name = "is_active")
-    private boolean isActive;
+    private Integer isActive;
 
     @Column(name = "birthday_date", columnDefinition = "DATE")
     private LocalDate birthdayDate;
@@ -78,4 +93,5 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Report> reports;
+
 }
