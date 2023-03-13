@@ -3,6 +3,7 @@ package com.beykent.aguapi.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-	
+
 	private final UserRepository userRepository;
 	
 	public User getUserById(Long id) {
@@ -66,15 +67,15 @@ public class UserService {
 		return updatedUser.getId();
 	}
 	
-//	public Long changeUserActivity(Long id) {
-//		User user = getUserById(id);
-//		if (User.USER_ACTIVE.equals(user.getIsActive())) {
-//			this.userRepository.changeUserActivity(id ,User.USER_INACTIVE);
-//		} else {
-//			this.userRepository.changeUserActivity(id, User.USER_ACTIVE);
-//		}
-//		return user.getId();
-//	}
+	public Long changeUserActivity(Long id) {
+		User user = getUserById(id);
+		if (User.USER_ACTIVE.equals(user.getIsActive())) {
+			this.userRepository.changeUserActivity(id ,User.USER_INACTIVE);
+		} else {
+			this.userRepository.changeUserActivity(id, User.USER_ACTIVE);
+		}
+		return user.getId();
+	}
 	
 	public void deleteUser(Long id) {
 		try {
