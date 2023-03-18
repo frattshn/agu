@@ -10,6 +10,7 @@ import org.hibernate.annotations.FetchMode;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -45,7 +46,7 @@ public class User {
 
     @Size(min = 3)
     @Column(name = "user_name", unique = true, columnDefinition = "VARCHAR(255)")
-    private String username;
+    private String userName;
 
     @Column(name = "password", columnDefinition = "VARCHAR(255)")
     private String password;
@@ -61,7 +62,7 @@ public class User {
     private Integer isActive;
 
     @Column(name = "birthday_date", columnDefinition = "DATE")
-    private LocalDate birthdayDate;
+    private LocalDate birthdate;
 
     @Column(name = "created_time", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdTime;
@@ -82,7 +83,7 @@ public class User {
     @Fetch(FetchMode.JOIN)
     private List<Like> likes;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Post> posts;
 
     @OneToMany(mappedBy = "senderUser", cascade = CascadeType.ALL, orphanRemoval = true)

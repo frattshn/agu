@@ -2,14 +2,14 @@ package com.beykent.aguapi.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class ResourceAlreadyExistException extends RuntimeException{
+public class ResourceAlreadyExistsException extends RuntimeException{
 
 	private static final long serialVersionUID = 473014985662191980L;
 	
 	private String message;
 	private int statusCode;
 	
-	public ResourceAlreadyExistException(String message) {
+	public ResourceAlreadyExistsException(String message) {
 		this.message = message;
 		this.statusCode = HttpStatus.CONFLICT.value();
 	}

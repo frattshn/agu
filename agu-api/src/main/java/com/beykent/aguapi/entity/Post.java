@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity(name = "post")
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "postedTime", "user_id" }) })
 @Data
 public class Post {
     @Id
@@ -21,7 +22,7 @@ public class Post {
     private String text;
 
     private boolean isPrivate;
-
+    
     private LocalDate postedTime;
 
     private LocalDateTime createdTime;

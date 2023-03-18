@@ -3,13 +3,12 @@ package com.beykent.aguapi.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.beykent.aguapi.entity.User;
 import com.beykent.aguapi.exception.InvalidParameterException;
-import com.beykent.aguapi.exception.ResourceAlreadyExistException;
+import com.beykent.aguapi.exception.ResourceAlreadyExistsException;
 import com.beykent.aguapi.exception.ResourceNotFoundException;
 import com.beykent.aguapi.repository.UserRepository;
 
@@ -40,7 +39,7 @@ public class UserService {
 		} catch (ValidationException e) {
 			throw new InvalidParameterException("Invalid character!");
 		} catch (DataIntegrityViolationException e) {
-			throw new ResourceAlreadyExistException("User already exist!");
+			throw new ResourceAlreadyExistsException("User already exists!");
 		}
 		return savedUser.getId();
 	}
@@ -50,19 +49,19 @@ public class UserService {
 		User updatedUser;
 		
 		foundUser.setNameSurname(user.getNameSurname());
-		foundUser.setUsername(user.getUsername());
+		foundUser.setUserName(user.getUserName());
 		foundUser.setPassword(user.getPassword());
 		foundUser.setEmail(user.getEmail());
 		foundUser.setBioContent(user.getBioContent());
 		foundUser.setAvatar(user.getAvatar());
-		foundUser.setBirthdayDate(user.getBirthdayDate());
+		foundUser.setBirthdate(user.getBirthdate());
 		
 		try {
 			updatedUser = this.userRepository.save(foundUser);
 		} catch (ValidationException e) {
 			throw new InvalidParameterException("Invalid character!");
 		} catch (DataIntegrityViolationException e) {
-			throw new ResourceAlreadyExistException("User already exist!");
+			throw new ResourceAlreadyExistsException("User already exists!");
 		}
 		return updatedUser.getId();
 	}
