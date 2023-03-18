@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,18 @@ public interface PostRepository extends JpaRepository<Post, Long>{
 	@Transactional
 	@Query(value = "SELECT * FROM post p WHERE p.is_private = 0", nativeQuery = true)
 	public List<Post> getAllPublicPosts();
+	
+	
+	@Query("SELECT p FROM post p " +
+			"WHERE (:userId IS NULL OR p.user.id = :userId) " +
+			"AND (:isPrivate IS NULL OR p.isPrivate = :isPrivate) " +
+			"AND (:moodId IS NULL OR p.mood.moodId = :moodId)"
+		)
+	public List<Post> findPostsByFilter(
+			@Param("userId") Long userId,
+			@Param("isPrivate") Boolean isPrivate,
+			@Param("moodId") Integer moodId
+		);
 	
 
 }

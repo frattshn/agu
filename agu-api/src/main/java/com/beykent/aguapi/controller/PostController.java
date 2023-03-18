@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.beykent.aguapi.entity.Post;
@@ -28,6 +29,13 @@ public class PostController extends ErrorController{
 	public ResponseEntity<List<Post>> getAllPublicPosts(){
 		return ResponseEntity.status(HttpStatus.OK).body(this.postService.getAllPublicPosts());
 	}
+	
+	@GetMapping("/search")
+	public ResponseEntity<List<Post>> getPostsByMoodId(@RequestParam(required = false) Long userId, @RequestParam(required = false) Boolean isPrivate, @RequestParam(required = false) Integer moodId){
+		return ResponseEntity.status(HttpStatus.OK).body(this.postService.findPostsByFilter(userId, isPrivate, moodId));
+	}
+	
+	
 	
 	@PostMapping("/{userId}")
 	public ResponseEntity<Long> createPost(@PathVariable Long userId, @RequestBody @Valid Post post){
