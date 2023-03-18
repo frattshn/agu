@@ -26,6 +26,10 @@ public class PostService {
 		return this.postRepository.getAllPublicPosts();
 	}
 	
+	public List<Post> findPostsByFilter(Long userId, Boolean isPrivate, Integer moodId){
+		return this.postRepository.findPostsByFilter(userId, isPrivate, moodId);
+	}
+	
 	public Long createPost(Long userId, @Valid Post post) {
 		Post savedPost;
 		post.setCreatedTime(LocalDateTime.now());
@@ -38,7 +42,8 @@ public class PostService {
 			throw new ResourceAlreadyExistsException("Post already exists at this time : " + post.getPostedTime().toString() + " with this user : " + post.getUser().toString());
 		}
 		return savedPost.getId();
-		
 	}
+	
+	
 	
 }
