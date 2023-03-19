@@ -31,25 +31,21 @@ public class UserController extends ErrorController{
 
 	@PostMapping
 	public ResponseEntity<Long> createUser(@RequestBody @Valid User user){
-		Long userId = this.userService.createUser(user);
-		return ResponseEntity.status(HttpStatus.CREATED).body(userId);
+		return ResponseEntity.status(HttpStatus.CREATED).body(this.userService.createUser(user));
 	}
 
-	@PutMapping
-	public ResponseEntity<Long> updateUser(@RequestBody @Valid User user){
-		Long userId = this.userService.updateUser(user);
-		return ResponseEntity.status(HttpStatus.OK).body(userId);
+	@PutMapping("/{id}")
+	public ResponseEntity<Long> updateUser(@PathVariable Long id, @RequestBody @Valid User user){
+		return ResponseEntity.status(HttpStatus.OK).body(this.userService.updateUser(id, user));
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteUser(@PathVariable Long id){
-		this.userService.deleteUser(id);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(this.userService.deleteUser(id));
 	}
 
 	@PatchMapping("/{id}")
 	public ResponseEntity<Long> changeUserActivity(@PathVariable Long id) {
-		Long userId = this.userService.changeUserActivity(id);
-		return ResponseEntity.status(HttpStatus.OK).body(userId);
+		return ResponseEntity.status(HttpStatus.OK).body(this.userService.changeUserActivity(id));
 	}
 }

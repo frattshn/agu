@@ -44,8 +44,8 @@ public class UserService {
 		return savedUser.getId();
 	}
 	
-	public Long updateUser(@Valid User user) {
-		User foundUser = getUserById(user.getId());
+	public Long updateUser(Long id, @Valid User user) {
+		User foundUser = getUserById(id);
 		User updatedUser;
 		
 		foundUser.setNameSurname(user.getNameSurname());
@@ -63,7 +63,7 @@ public class UserService {
 		} catch (DataIntegrityViolationException e) {
 			throw new ResourceAlreadyExistsException("User already exists!");
 		}
-		return updatedUser.getId();
+		return id;
 	}
 	
 	public Long changeUserActivity(Long id) {
@@ -76,9 +76,10 @@ public class UserService {
 		return user.getId();
 	}
 	
-	public void deleteUser(Long id) {
+	public Void deleteUser(Long id) {
 		try {
 			this.userRepository.deleteById(id);
+			return null;
 		} catch (IllegalArgumentException e) {
 			throw new InvalidParameterException("Id cannot be null!");
 		}
