@@ -63,7 +63,7 @@ public class UserService {
 		} catch (DataIntegrityViolationException e) {
 			throw new ResourceAlreadyExistsException("User already exists!");
 		}
-		return id;
+		return updatedUser.getId();
 	}
 	
 	public Long changeUserActivity(Long id) {
