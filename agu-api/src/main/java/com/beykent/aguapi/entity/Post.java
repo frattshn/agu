@@ -13,6 +13,11 @@ import java.util.Set;
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "postedTime", "user_id" }) })
 @Data
 public class Post {
+
+    public static final Boolean PUBLIC_POST = Boolean.TRUE;
+    public static final Boolean PRIVATE_POST = Boolean.FALSE;
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
@@ -26,7 +31,7 @@ public class Post {
 
     private String text;
 
-    private boolean isPrivate;
+    private boolean isPublic;
     
     private LocalDate postedTime;
 

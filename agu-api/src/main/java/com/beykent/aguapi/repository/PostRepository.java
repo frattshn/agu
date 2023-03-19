@@ -13,21 +13,15 @@ import com.beykent.aguapi.entity.Post;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long>{
-	
-	@Modifying
-	@Transactional
-	@Query(value = "SELECT * FROM post p WHERE p.is_private = 0", nativeQuery = true)
-	public List<Post> getAllPublicPosts();
-	
-	
+
 	@Query("SELECT p FROM post p " +
 			"WHERE (:userId IS NULL OR p.user.id = :userId) " +
-			"AND (:isPrivate IS NULL OR p.isPrivate = :isPrivate) " +
+			"AND (:isPublic IS NULL OR p.isPublic = :isPublic) " +
 			"AND (:moodId IS NULL OR p.mood.moodId = :moodId)"
 		)
 	public List<Post> findPostsByFilter(
 			@Param("userId") Long userId,
-			@Param("isPrivate") Boolean isPrivate,
+			@Param("isPublic") Boolean isPublic,
 			@Param("moodId") Integer moodId
 		);
 	
