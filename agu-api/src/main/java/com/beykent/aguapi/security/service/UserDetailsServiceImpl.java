@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.beykent.aguapi.entity.User;
-import com.beykent.aguapi.repository.UserRepository;
 import com.beykent.aguapi.security.jwt.JwtUserDetails;
+import com.beykent.aguapi.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,11 +15,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService{
 	
-	private final UserRepository userRepository;
+	private final UserService userService;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepository.getUserByUserName(username).get();
+		User user = userService.getUserByUserName(username);
 		return JwtUserDetails.create(user);
 	}
 	

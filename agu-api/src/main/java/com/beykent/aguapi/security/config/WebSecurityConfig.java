@@ -47,34 +47,17 @@ public class WebSecurityConfig {
 	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http
-//			.cors().and()
-//			.csrf().disable()
-//			.exceptionHandling().authenticationEntryPoint(jwtAuthEntryPoint)
-//			.and()
-//			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//			.and().anonymous().and()
-//			.authorizeHttpRequests(auth -> auth
-//					.requestMatchers(HttpMethod.POST, "api/v1/auth/authenticate").permitAll()
-//					.requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/h2-console/**").permitAll()
-//					.anyRequest().authenticated()
-//					);
-			.csrf().disable()
+		http.csrf().disable()
 			.authorizeHttpRequests()
-					.requestMatchers(HttpMethod.POST, "api/v1/auth/authenticate").permitAll()
+					.requestMatchers(HttpMethod.POST, "/api/v1/auth/authenticate").permitAll()
 					.requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/h2-console/**").permitAll()
 					.anyRequest().authenticated()
-					.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-					.and()
-					.authenticationProvider(daoAuthenticationProvider())
-					.exceptionHandling().authenticationEntryPoint(jwtAuthEntryPoint).and()
-					.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-					
-					
-					
-		
-//			http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-//			http.authenticationProvider(daoAuthenticationProvider());
+			.and()
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.and()
+			.authenticationProvider(daoAuthenticationProvider())
+			.exceptionHandling().authenticationEntryPoint(jwtAuthEntryPoint).and()
+			.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 		
 		return http.build();
 	}
