@@ -29,7 +29,11 @@ public class UserService {
 	}
 	
 	public User getUserByUserName(String userName) {
-		return this.userRepository.getUserByUserName(userName).orElseThrow(() -> new ResourceNotFoundException("User not found with this userName : %s".formatted(userName)));
+		User user = this.userRepository.getUserByUserName(userName);
+		if (user == null) {
+			throw new ResourceNotFoundException("User not found with this userName : %s".formatted(userName));
+		}
+		return user;
 	}
 	
 	public List<User> getAllUsers(){
