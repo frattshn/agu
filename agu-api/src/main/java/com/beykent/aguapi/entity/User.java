@@ -32,6 +32,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "BIGINT(20)")
     private Long id;
+    
+    @OneToOne
+    @JoinColumn(name = "user_role_id")
+    private UserRoleType userRole;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "avatar_id")

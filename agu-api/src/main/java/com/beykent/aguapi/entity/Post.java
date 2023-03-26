@@ -66,5 +66,13 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Image> images;
+    
+    public boolean getIsPublic() {
+    	return this.isPublic;
+    }
+    
+    public void setIsPublic(boolean isPublic) {
+    	this.isPublic = isPublic;
+    }
 
 }
