@@ -52,7 +52,7 @@ public class PostService {
 		foundPost.setTitle(post.getTitle());
 		foundPost.setText(post.getText());
 //		foundPost.setMood(); // mood service ve repository olusturulacak.
-		foundPost.setPublic(post.isPublic());
+		foundPost.setIsPublic(post.getIsPublic());
 		foundPost.setPostedTime(post.getPostedTime());
 		foundPost.setUpdatedTime(LocalDateTime.now());
 
@@ -68,7 +68,8 @@ public class PostService {
 
 	public Void deletePost(Long id) {
 		try {
-			this.postRepository.deleteById(id);
+			Post post = getPostById(id);
+			this.postRepository.deleteById(post.getId());
 			return null;
 		} catch (IllegalArgumentException e) {
 			throw new InvalidParameterException("Id cannot be null!");

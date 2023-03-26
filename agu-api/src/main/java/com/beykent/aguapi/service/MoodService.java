@@ -28,7 +28,6 @@ public class MoodService {
 				new Mood(Mood.INSPIRED, "INSPIRED"),
 				new Mood(Mood.CALM, "CALM"),
 				new Mood(Mood.CONFUSED, "CONFUSED"),
-				new Mood(Mood.CONFUSED, "CONFUSED"),
 				new Mood(Mood.HANGRY, "HANGRY")
 			);
 		this.moodRepository.saveAll(moodList);

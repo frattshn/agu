@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.beykent.aguapi.entity.User;
@@ -21,9 +22,14 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
 	private final UserRepository userRepository;
+	private final PasswordEncoder passwordEncoder;
 	
 	public User getUserById(Long id) {
 		return this.userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with this id : %d".formatted(id)));
+	}
+	
+	public User getUserByUserName(String userName) {
+		return this.userRepository.getUserByUserName(userName).orElseThrow(() -> new ResourceNotFoundException("User not found with this userName : %s".formatted(userName)));
 	}
 	
 	public List<User> getAllUsers(){
@@ -34,6 +40,7 @@ public class UserService {
 		User savedUser;
 		user.setIsActive(User.USER_ACTIVE);
 		user.setCreatedTime(LocalDateTime.now());
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		try {
 			savedUser = this.userRepository.save(user);
 		} catch (ValidationException e) {
@@ -74,15 +81,6 @@ public class UserService {
 			this.userRepository.changeUserActivity(id, User.USER_ACTIVE);
 		}
 		return user.getId();
-	}
-	
-	public Void deleteUser(Long id) {
-		try {
-			this.userRepository.deleteById(id);
-			return null;
-		} catch (IllegalArgumentException e) {
-			throw new InvalidParameterException("Id cannot be null!");
-		}
 	}
 	
 }

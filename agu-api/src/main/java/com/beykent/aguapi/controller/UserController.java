@@ -39,11 +39,6 @@ public class UserController extends ErrorController{
 		return ResponseEntity.status(HttpStatus.OK).body(this.userService.updateUser(id, user));
 	}
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteUser(@PathVariable Long id){
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(this.userService.deleteUser(id));
-	}
-
 	@PatchMapping("/{id}")
 	public ResponseEntity<Long> changeUserActivity(@PathVariable Long id) {
 		return ResponseEntity.status(HttpStatus.OK).body(this.userService.changeUserActivity(id));

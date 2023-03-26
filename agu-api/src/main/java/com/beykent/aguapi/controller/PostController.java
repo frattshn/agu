@@ -25,7 +25,7 @@ public class PostController extends ErrorController{
 	}
 
 	@GetMapping("/search")
-	public ResponseEntity<List<Post>> getPostsByMoodId(@RequestParam(required = false) Long userId, @RequestParam(required = false) Boolean isPublic, @RequestParam(required = false) Integer moodId){
+	public ResponseEntity<List<Post>> findPostsByFilter(@RequestParam(required = false) Long userId, @RequestParam(required = false) Boolean isPublic, @RequestParam(required = false) Integer moodId){
 		return ResponseEntity.status(HttpStatus.OK).body(this.postService.findPostsByFilter(userId, isPublic, moodId));
 	}
 
