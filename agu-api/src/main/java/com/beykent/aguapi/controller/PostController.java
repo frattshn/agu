@@ -25,7 +25,7 @@ public class PostController extends ErrorController{
 	}
 
 	@GetMapping("/search")
-	public ResponseEntity<List<Post>> findPostsByFilter(@RequestParam(required = false) Long userId, @RequestParam(required = false) Boolean isPublic, @RequestParam(required = false) Integer moodId){
+	public ResponseEntity<List<Post>> findPostsByFilter(@RequestParam(required = false) Long userId, @RequestParam(required = false) Integer isPublic, @RequestParam(required = false) Integer moodId){
 		return ResponseEntity.status(HttpStatus.OK).body(this.postService.findPostsByFilter(userId, isPublic, moodId));
 	}
 
@@ -39,9 +39,14 @@ public class PostController extends ErrorController{
 		return ResponseEntity.status(HttpStatus.OK).body(this.postService.updatePost(id, post));
 	}
 
-	@DeleteMapping("{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deletePost(@PathVariable Long id) {
 		return ResponseEntity.status(HttpStatus.OK).body(this.postService.deletePost(id));
+	}
+
+	@PatchMapping("/{id}")
+	public ResponseEntity<Long> changePostVisibility(@PathVariable Long id) {
+		return ResponseEntity.status(HttpStatus.OK).body(this.postService.changePostVisibility(id));
 	}
 
 }

@@ -1,8 +1,10 @@
 package com.beykent.aguapi.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.beykent.aguapi.entity.User;
 import com.beykent.aguapi.exception.ResourceNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -23,12 +25,13 @@ public class PostService {
 	private final PostRepository postRepository;
 	private final UserService userService;
 
+
 	public Post getPostById(Long postId) {
 		return this.postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post not found with this id : "));
 		// %d".formatted(postId)
 	}
 	
-	public List<Post> findPostsByFilter(Long userId, Boolean isPublic, Integer moodId){
+	public List<Post> findPostsByFilter(Long userId, Integer isPublic, Integer moodId){
 		return this.postRepository.findPostsByFilter(userId, isPublic, moodId);
 	}
 	
@@ -36,6 +39,12 @@ public class PostService {
 		Post savedPost;
 		post.setCreatedTime(LocalDateTime.now());
 		post.setUser(this.userService.getUserById(userId));
+		post.setIsPublic(Post.PUBLIC_POST);
+		if (post.getPostedTime() == null) {
+			post.setPostedTime(LocalDate.now());
+		} else if (post.getPostedTime().isAfter(LocalDate.now())){
+			post.setIsPublic(Post.PRIVATE_POST);
+		}
 		try {
 			savedPost = this.postRepository.save(post);
 		} catch (ValidationException e) {
@@ -76,4 +85,15 @@ public class PostService {
 			throw new InvalidParameterException("Id cannot be null!");
 		}
 	}
+
+	public Long changePostVisibility(Long id) {
+		Post post = getPostById(id);
+		if (Post.PUBLIC_POST.equals(post.getIsPublic())) {
+			this.postRepository.changePostVisibility(id ,Post.PRIVATE_POST);
+		} else {
+			this.postRepository.changePostVisibility(id ,Post.PUBLIC_POST);
+		}
+		return post.getId();
+	}
+
 }
