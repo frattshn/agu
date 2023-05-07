@@ -3,6 +3,8 @@ package com.beykent.aguapi.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,10 +14,12 @@ import java.util.Set;
 @Entity(name = "post")
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "postedTime", "user_id" }) })
 @Data
+@Getter
+@Setter
 public class Post {
 
-    public static final Boolean PUBLIC_POST = Boolean.TRUE;
-    public static final Boolean PRIVATE_POST = Boolean.FALSE;
+    public static final Integer PUBLIC_POST = Integer.valueOf(1);
+    public static final Integer PRIVATE_POST = Integer.valueOf(0);
 
 
     @Id
@@ -31,7 +35,7 @@ public class Post {
 
     private String text;
 
-    private boolean isPublic;
+    private Integer isPublic;
     
     private LocalDate postedTime;
 
@@ -66,13 +70,5 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL,  fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Image> images;
-    
-    public boolean getIsPublic() {
-    	return this.isPublic;
-    }
-    
-    public void setIsPublic(boolean isPublic) {
-    	this.isPublic = isPublic;
-    }
 
 }
