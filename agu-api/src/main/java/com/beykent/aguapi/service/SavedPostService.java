@@ -3,7 +3,7 @@ package com.beykent.aguapi.service;
 import com.beykent.aguapi.entity.SavedPost;
 import com.beykent.aguapi.exception.InvalidParameterException;
 import com.beykent.aguapi.repository.SavedPostRepository;
-import jakarta.validation.ValidationException;
+import javax.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
