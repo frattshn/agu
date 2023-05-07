@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.beykent.aguapi.entity.Post;
 import com.beykent.aguapi.service.PostService;
 
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController

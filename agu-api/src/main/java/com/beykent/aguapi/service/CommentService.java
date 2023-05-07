@@ -5,8 +5,8 @@ import com.beykent.aguapi.exception.InvalidParameterException;
 import com.beykent.aguapi.exception.ResourceAlreadyExistsException;
 import com.beykent.aguapi.exception.ResourceNotFoundException;
 import com.beykent.aguapi.repository.CommentRepository;
-import jakarta.validation.Valid;
-import jakarta.validation.ValidationException;
+import javax.validation.Valid;
+import javax.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,8 @@ public class CommentService {
     }
 
     public Comment getCommentById(Long commentId) {
-        return this.commentRepository.findById(commentId).orElseThrow(() -> new ResourceNotFoundException("Comment not found with this id : %d".formatted(commentId)));
+        return this.commentRepository.findById(commentId).orElseThrow(() -> new ResourceNotFoundException("Comment not found with this id :"));
+        //  %d".formatted(commentId)
     }
 
     public Long createComment(Long postId, @Valid Comment comment) {

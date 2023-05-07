@@ -14,7 +14,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE user u SET u.is_active = :isActive WHERE u.id = :id", nativeQuery = true)
+    @Query(value = "UPDATE user u SET u.isActive = :isActive WHERE u.id = :id")
     public void changeUserActivity(@Param("id") Long id, @Param("isActive") Integer isActive);
 
     @Transactional

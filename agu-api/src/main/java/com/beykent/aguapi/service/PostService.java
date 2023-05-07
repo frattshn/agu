@@ -12,8 +12,8 @@ import com.beykent.aguapi.exception.InvalidParameterException;
 import com.beykent.aguapi.exception.ResourceAlreadyExistsException;
 import com.beykent.aguapi.repository.PostRepository;
 
-import jakarta.validation.Valid;
-import jakarta.validation.ValidationException;
+import javax.validation.Valid;
+import javax.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -24,7 +24,8 @@ public class PostService {
 	private final UserService userService;
 
 	public Post getPostById(Long postId) {
-		return this.postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post not found with this id : %d".formatted(postId)));
+		return this.postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post not found with this id : "));
+		// %d".formatted(postId)
 	}
 	
 	public List<Post> findPostsByFilter(Long userId, Boolean isPublic, Integer moodId){

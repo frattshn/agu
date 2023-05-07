@@ -2,7 +2,7 @@ package com.beykent.aguapi.controller;
 
 import com.beykent.aguapi.entity.Comment;
 import com.beykent.aguapi.service.CommentService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

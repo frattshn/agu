@@ -2,7 +2,7 @@ package com.beykent.aguapi.controller;
 
 import java.util.List;
 
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,9 +29,10 @@ public class UserController extends ErrorController{
 		return ResponseEntity.status(HttpStatus.OK).body(this.userService.getAllUsers());
 	}
 
-	@PostMapping
-	public ResponseEntity<Long> createUser(@RequestBody @Valid User user){
-		return ResponseEntity.status(HttpStatus.CREATED).body(this.userService.createUser(user));
+	@PostMapping("/register")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Long registerUser(@RequestBody User user) {
+		return userService.createUser(user);
 	}
 
 	@PutMapping("/{id}")

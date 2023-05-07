@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.beykent.aguapi.entity.Mood;
 import com.beykent.aguapi.repository.MoodRepository;
 
-import jakarta.annotation.PostConstruct;
+import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 
 @Service
