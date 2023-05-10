@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.beykent.aguapi.entity.User;
+import com.beykent.aguapi.request.UserRegisterRequest;
 import com.beykent.aguapi.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -31,8 +32,8 @@ public class UserController extends ErrorController{
 
 	@PostMapping("/register")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Long registerUser(@RequestBody User user) {
-		return userService.createUser(user);
+	public Long registerUser(@RequestBody @Valid UserRegisterRequest userRegisterRequest) {
+		return userService.createUser(userRegisterRequest);
 	}
 
 	@PutMapping("/{id}")

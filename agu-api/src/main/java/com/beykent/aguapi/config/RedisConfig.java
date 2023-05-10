@@ -14,19 +14,19 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @EnableRedisHttpSession
 public class RedisConfig {
 
-    @Value("${spring.redis.host}")
+    @Value("${spring.redis.host:localhost}")
     private String redisHost;
 
-    @Value("${spring.redis.port}")
+    @Value("${spring.redis.port:6379}")
     private int redisPort;
 
-    @Value("${spring.redis.password}")
+    @Value("${spring.redis.password:password}")
     private String password;
 
-    @Value("${spring.redis.jedis.pool.max-idle}")
+    @Value("${spring.redis.jedis.pool.max-idle:30}")
     private int maxIdle;
 
-    @Value("${spring.redis.jedis.pool.min-idle}")
+    @Value("${spring.redis.jedis.pool.min-idle:10}")
     private int minIdle;
 
     @Bean
