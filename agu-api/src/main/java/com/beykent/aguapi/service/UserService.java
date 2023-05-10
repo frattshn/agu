@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
+import javax.validation.Valid;
+import javax.validation.ValidationException;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,9 +19,8 @@ import com.beykent.aguapi.exception.InvalidParameterException;
 import com.beykent.aguapi.exception.ResourceAlreadyExistsException;
 import com.beykent.aguapi.exception.ResourceNotFoundException;
 import com.beykent.aguapi.repository.UserRepository;
+import com.beykent.aguapi.request.UserRegisterRequest;
 
-import javax.validation.Valid;
-import javax.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -49,13 +51,15 @@ public class UserService implements UserDetailsService {
 		return this.userRepository.findAll();
 	}
 	
-	public Long createUser(@Valid User user) {
-		User savedUser;
-		user.setIsActive(User.USER_ACTIVE);
-		user.setCreatedTime(LocalDateTime.now());
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
+	public Long createUser(@Valid UserRegisterRequest userRegisterRequest) {
+		User savedUser = new User();
+		savedUser.setUserName(userRegisterRequest.getUserName());
+		savedUser.setEmail(userRegisterRequest.getEmail());
+		savedUser.setIsActive(User.USER_ACTIVE);
+		savedUser.setCreatedTime(LocalDateTime.now());
+		savedUser.setPassword(passwordEncoder.encode(userRegisterRequest.getPassword()));
 		try {
-			savedUser = this.userRepository.save(user);
+			savedUser = this.userRepository.save(savedUser);
 		} catch (ValidationException e) {
 			throw new InvalidParameterException("Invalid character!");
 		} catch (DataIntegrityViolationException e) {
